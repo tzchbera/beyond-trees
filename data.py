@@ -397,6 +397,11 @@ def load_datasets(resources_dir: str, model: Optional[str] = None, max_genes: in
 
         validate_dataset_quality(elements, edges, go_graph, gene_to_go, dag)
 
+        n_v = g_sim.vcount()
+        m_1 = g_sim.ecount()
+        n_pairs = n_v * (n_v - 1) // 2
+        print(f"{model}: |V|={n_v} | interacting pairs m_1={m_1:,} | pairs={n_pairs:,} | density={100.0 * m_1 / n_pairs:.2f}% (igraph density: {100.0 * g_sim.density():.2f}%)")
+
         datasets.append(Dataset(name=model, elements=elements, matrix=matrix, dag=dag))
 
     return datasets
