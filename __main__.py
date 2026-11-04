@@ -183,20 +183,20 @@ def evaluate_biological_contrast(datasets: List[Dataset], save_path: str, n_boot
         pr_low = np.array([stats[p]["ci"][0] for p in p_values])
         pr_high = np.array([stats[p]["ci"][1] for p in p_values])
 
-        ax.plot(p_arr, prs, marker="s", linewidth=2.2, color="tab:red", label=r"GO DAG ($1/H_p$)")
+        ax.plot(p_arr, prs, marker="s", linewidth=2.2, color="tab:red", label=f"$c_p$ ({stats[-1]["ap"]:.3f} at $p=-1$)")
         if n_boot > 0:
             ax.fill_between(p_arr, pr_low, pr_high, color="tab:red", alpha=0.20, label="95% Bootstrap CI")
         ax.axhline(
             stats["lca-avg"]["ap"], linestyle="--", color="tab:blue", alpha=0.85, linewidth=1.5,
-            label=f'$c_{{\\text{{trans}}}}$ / Pan et al. ({stats["lca-avg"]["ap"]:.3f})',
+            label=f'$c_{{\\text{{trans}}}}$ ({stats["lca-avg"]["ap"]:.3f})',
         )
         ax.axhline(
             stats["lca-min"]["ap"], linestyle="-.", color="tab:orange", alpha=0.85, linewidth=1.5,
-            label=f'$c_{{\\text{{min}}}}$ / MCA-min ({stats["lca-min"]["ap"]:.3f})',
+            label=f'$c_{{\\text{{min}}}}$ ({stats["lca-min"]["ap"]:.3f})',
         )
         ax.axhline(
             item["prevalence"], linestyle=":", color="gray", alpha=0.85, linewidth=1.5,
-            label=f'Random Baseline ({item["prevalence"]:.3f})',
+            label=f'Random ({item["prevalence"]:.3f})',
         )
         ax.set_xticks(p_arr)
         ax.set_title(item["name"], fontsize=12, fontweight="bold")
